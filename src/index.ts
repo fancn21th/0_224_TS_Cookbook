@@ -1,10 +1,11 @@
 class Foo {
-  titles: string[] | undefined;
+  // definite assign operator
+  // indicate it must be assigned at runtime
+  titles!: string[];
 
   constructor() {}
 }
 
 const foo = new Foo();
 
-// try to remove the guard on the left
-foo.titles && foo.titles.forEach((t) => console.log(t));
+foo.titles.forEach((t) => console.log(t));

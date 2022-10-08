@@ -1,11 +1,25 @@
-class Foo {
-  // definite assign operator
-  // indicate it must be assigned at runtime
-  titles!: string[];
-
-  constructor() {}
+interface Admin {
+  id: string;
+  role: string;
 }
 
-const foo = new Foo();
+interface User {
+  email: string;
+}
 
-foo.titles.forEach((t) => console.log(t));
+function redirectToAdminPage(role: string): void {
+  console.log(role);
+}
+
+function redirectToHomePage(email: string): void {
+  console.log(email);
+}
+
+function redirect(usr: Admin | User) {
+  // type inference with in operator
+  if ("role" in usr) {
+    redirectToAdminPage(usr.role);
+  } else {
+    redirectToHomePage(usr.email);
+  }
+}

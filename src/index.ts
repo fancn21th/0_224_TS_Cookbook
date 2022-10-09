@@ -1,18 +1,58 @@
-interface User {
-  name: string;
-  age: number;
-  favorite?: string;
-}
+/**
+ *  Type is more type robust like
+ *    - it support type union
+ *    - it support complex type like function and array
+ *    - it support type merge
+ *
+ *  VS
+ *
+ *  Interface is more object oriental
+ *    - it support type merge
+ *    - it is important expose lib public api with interface
+ *
+ */
 
-//  use case : redux state must be immutable
-// +remove optional property
-// add flag make it more explicit
-type ReadOnlyUser = {
-  +readonly [K in keyof User]-?: User[K];
+// type Foo = (foz: string) => void;
+
+// interface IFoo {
+//   (foz: string): void;
+// }
+
+// type Bar = string[];
+
+// interface IBar {
+//   [index: number]: string;
+// }
+
+type Foo = {
+  foz: (fit: string) => void;
 };
 
-const looseUser: User = { name: "alex", age: 18 };
-const strictUser: ReadOnlyUser = { name: "bob", age: 20 };
+interface IFoo {
+  foz: (fit: string) => void;
+}
 
-looseUser.age = 21;
-// strictUser.age = 23;
+type Bar = {
+  baz: string[];
+};
+
+interface IBar {
+  baz: string[];
+}
+
+interface IHybrid extends Foo, IBar {}
+
+type Hybrid = IFoo & Bar;
+
+class HybridClass implements IFoo, Bar {
+  foz(fit: string) {}
+  baz: string[];
+}
+
+// no error now !
+
+interface ISub extends Foo {}
+
+class ClassSub implements Foo {
+  foz(fit: string) {}
+}

@@ -6,8 +6,9 @@ interface User {
 
 //  use case : redux state must be immutable
 // +remove optional property
+// add flag make it more explicit
 type ReadOnlyUser = {
-  readonly [K in keyof User]-?: User[K];
+  +readonly [K in keyof User]-?: User[K];
 };
 
 const looseUser: User = { name: "alex", age: 18 };

@@ -1,58 +1,17 @@
-/**
- *  Type is more type robust like
- *    - it support type union
- *    - it support complex type like function and array
- *    - it support type merge
- *
- *  VS
- *
- *  Interface is more object oriental
- *    - it support type merge
- *    - it is important expose lib public api with interface
- *
- */
+interface TreeNode<T> {
+  value: T;
+  left: TreeNode<T>;
+  right: TreeNode<T>;
+}
 
-// type Foo = (foz: string) => void;
+interface LinkedListNode<T> {
+  value: T;
+  next: LinkedListNode<T> | null;
+}
 
-// interface IFoo {
-//   (foz: string): void;
-// }
+let nodeA: LinkedListNode<string>;
 
-// type Bar = string[];
-
-// interface IBar {
-//   [index: number]: string;
-// }
-
-type Foo = {
-  foz: (fit: string) => void;
+nodeA = {
+  value: "hi",
+  next: null,
 };
-
-interface IFoo {
-  foz: (fit: string) => void;
-}
-
-type Bar = {
-  baz: string[];
-};
-
-interface IBar {
-  baz: string[];
-}
-
-interface IHybrid extends Foo, IBar {}
-
-type Hybrid = IFoo & Bar;
-
-class HybridClass implements IFoo, Bar {
-  foz(fit: string) {}
-  baz: string[];
-}
-
-// no error now !
-
-interface ISub extends Foo {}
-
-class ClassSub implements Foo {
-  foz(fit: string) {}
-}

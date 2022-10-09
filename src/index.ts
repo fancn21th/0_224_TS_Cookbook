@@ -1,25 +1,14 @@
-interface Admin {
-  id: string;
-  role: string;
-}
-
 interface User {
-  email: string;
+  name: string;
+  age: number;
 }
 
-function redirectToAdminPage(role: string): void {
-  console.log(role);
-}
+type ReadOnlyUser = {
+  readonly [K in keyof User]: User[K];
+};
 
-function redirectToHomePage(email: string): void {
-  console.log(email);
-}
+const looseUser: User = { name: "alex", age: 18 };
+const strictUser: ReadOnlyUser = { name: "bob", age: 20 };
 
-function redirect(usr: Admin | User) {
-  // type inference with in operator
-  if ("role" in usr) {
-    redirectToAdminPage(usr.role);
-  } else {
-    redirectToHomePage(usr.email);
-  }
-}
+looseUser.age = 21;
+strictUser.age = 23;
